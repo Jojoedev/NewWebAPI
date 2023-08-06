@@ -31,8 +31,8 @@ namespace WebAPI.Controllers
         {
 
            var items = _repository.GetItems().Select(x => x.AsDTO());
-            
-            
+            return items;
+
             /*var it = _repository.GetItems().Select(item => new ItemDTO
             {
                 Id = Guid.NewGuid(),
@@ -41,10 +41,10 @@ namespace WebAPI.Controllers
 
             });*/
 
-           // item => new ItemDTO; This is an anonymous function that takes parameter item and return new ItemDTO
+            // item => new ItemDTO; This is an anonymous function that takes parameter item and return new ItemDTO
             //Item item = new ItemDTO. This is a mere assignment of an instance of Item class "item" to new ItemDto
 
-            return items;
+
         }
 
 
@@ -78,7 +78,7 @@ namespace WebAPI.Controllers
         public ActionResult<ItemDTO> Create(CreateItemDTO createItemDTO)
         {
             //Assigning Item properties from "obj of CreateItemDTO";
-            Item item = new Item()
+            Item item = new() 
             {
                 Id = Guid.NewGuid(),
                 Name = createItemDTO.Name,
@@ -87,13 +87,13 @@ namespace WebAPI.Controllers
             };
 
             _repository.CreateItem(item);
-            return CreatedAtAction(nameof(GetOneItem), new {id = item.Id }, item.AsDTO()) ;
+            return CreatedAtAction(nameof(GetOneItem), new {id = item.Id }, item.AsDTO());
             
         }
 
         
 
-
+         
         // PUT /items/{id}
 
         [HttpPut("{id}")]
